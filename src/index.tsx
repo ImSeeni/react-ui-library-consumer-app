@@ -3,13 +3,18 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { MyThemeProvider } from 'my-ui-library';
+import fontStyles from './styles/font-styles';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
-    <App />
+    <MyThemeProvider customStyles={fontStyles}>
+      <App />
+    </MyThemeProvider>
   </React.StrictMode>
 );
 

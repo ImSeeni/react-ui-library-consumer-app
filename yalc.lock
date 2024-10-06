@@ -1,0 +1,10 @@
+{
+  "version": "v1",
+  "packages": {
+    "my-ui-library": {
+      "signature": "f924f34ebce46e55b772f168128f16e8",
+      "file": true,
+      "replaced": "file:../react-ui-library"
+    }
+  }
+}
