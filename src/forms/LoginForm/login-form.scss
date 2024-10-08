@@ -1,0 +1,15 @@
+.field-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px; /* Space between rows */
+  }
+  
+  .field-column {
+    flex: 1;
+    padding-right: 16px; /* Space between fields in the same row */
+  }
+  
+  .field-column:last-child {
+    padding-right: 0; /* No padding on the last field */
+  }
+  
