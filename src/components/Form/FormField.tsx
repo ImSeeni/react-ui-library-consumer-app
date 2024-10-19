@@ -5,10 +5,16 @@ import {
   Path,
   PathValue,
 } from "react-hook-form";
+
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+
 import { Field } from "../../types/form";
 import FormInput from "./FormInput";
 import FormSelect from "./FormSelect";
-import { FormControlLabel, Switch } from "@mui/material";
+import FormSwitch from "./FormSwitch";
+import dayjs from "dayjs";
 
 interface FormFieldProps<T extends FieldValues> {
   element: Field;
@@ -21,10 +27,17 @@ const FormField = <T extends FieldValues>({
 }: FormFieldProps<T>) => {
   const { name, rules, type, defaultValue } = element;
   const defaultVal = defaultValue
-    ? defaultValue
+    ? type === "date"
+      ? dayjs(defaultValue)
+      : defaultValue
     : type === "switch"
     ? false
+    : type === "date"
+    ? null
     : "";
+
+  console.log(name, defaultVal);
+
   return (
     <Controller
       name={name as Path<T>}
@@ -36,16 +49,27 @@ const FormField = <T extends FieldValues>({
           case "select":
             return <FormSelect element={element} error={error} field={field} />;
           case "switch":
+            return <FormSwitch field={field} error={error} />;
+          case "date":
             return (
-              <FormControlLabel
-                control={
-                  <Switch
-                    checked={!!field.value}
-                    onChange={(e) => field.onChange(e.target.checked)} // Handle checked state
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DemoContainer components={["DatePicker"]}>
+                  <DatePicker
+                    value={field.value ? dayjs(field.value) : null}
+                    onChange={(newValue) =>
+                      field.onChange(newValue ? newValue.toDate() : null)
+                    }
+                    slotProps={{
+                      textField: {
+                        error: !!error,
+                        helperText: error ? error.message : "",
+                        fullWidth: true,
+                      },
+                    }}
+                    format={"MMM YYYY"}
                   />
-                }
-                label={!!field.value ? "Active" : "Inactive"}
-              />
+                </DemoContainer>
+              </LocalizationProvider>
             );
           default:
             return <FormInput element={element} error={error} field={field} />;
