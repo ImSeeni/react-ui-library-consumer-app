@@ -1,6 +1,6 @@
 import React from "react";
 import { Form } from "../../components/Form";
-import { FieldGroup } from "../../types/form";
+import { Field, FieldGroup } from "../../types/form";
 import { MyCard, MyStack } from "my-ui-library";
 
 // Define the form data structure
@@ -9,10 +9,11 @@ type ILoginForm = {
   lastName: string;
   age: number;
   gender: string;
+  startDate: Date;
 };
 
 const LoginForm = () => {
-  const fieldGroups: FieldGroup<ILoginForm>[] = [
+  const fieldGroups: FieldGroup[] = [
     {
       fields: [
         {
@@ -21,6 +22,7 @@ const LoginForm = () => {
           type: "text",
           placeholder: "Enter your first name",
           rules: { required: "First name is required" },
+          defaultValue: "first",
         },
         {
           name: "lastName",
@@ -28,11 +30,7 @@ const LoginForm = () => {
           type: "text",
           placeholder: "Enter your last name",
           rules: { required: "Last name is required" },
-        },
-        {
-          name: "newsletter",
-          label: "Subscribe to newsletter",
-          type: "switch", // Type is 'switch'
+          defaultValue: "last",
         },
       ], // These two fields are in the same row
     },
@@ -47,6 +45,7 @@ const LoginForm = () => {
             required: "Age is required",
             min: { value: 18, message: "Must be 18 or older" },
           },
+          defaultValue: "30",
         },
         {
           name: "gender",
@@ -60,12 +59,28 @@ const LoginForm = () => {
           ],
           rules: { required: "Please select your gender" },
         },
+        {
+          type: "date",
+          name: "startDate",
+          label: "Start Date",
+          rules: {
+            required: "Please select the start date",
+          },
+          defaultValue: "12/Oct/2024",
+          format: "MMM YYYY",
+        },
       ], // These two fields are in the same row
     },
   ];
 
+  const actionField: Field = {
+    name: "newsletter",
+    label: "Subscribe to newsletter",
+    type: "switch", // Type is 'switch'
+  };
+
   const onSubmit = (data: ILoginForm) => {
-    console.log(data);
+    alert(JSON.stringify(data, null, 2));
   };
 
   return (
@@ -74,7 +89,7 @@ const LoginForm = () => {
         <Form<ILoginForm>
           fieldGroups={fieldGroups}
           onSubmit={onSubmit}
-          gaps={{ labelGap: 1, columnGap: 3, rowGap: 1 }}
+          actionField={actionField}
         />
       </MyCard>
     </MyStack>

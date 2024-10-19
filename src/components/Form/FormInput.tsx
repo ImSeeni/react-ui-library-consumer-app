@@ -25,7 +25,6 @@ const FormInput = <T extends FieldValues>({
       error={!!error}
       value={value || ""}
       onChange={onChange}
-      defaultValue={defaultValue}
       placeholder={placeholder}
       helperText={error ? error.message : ""}
       fullWidth

@@ -1,12 +1,12 @@
 import React from "react";
-import { InputLabel } from "@mui/material";
+import { InputLabel, Typography } from "@mui/material";
 import { MyStack } from "my-ui-library";
 
 import FormRow from "./FormRow";
 import FormColumn from "./FormColumn";
 import FormField from "./FormField";
 import { Control, FieldValues } from "react-hook-form";
-import { FormProps } from "../../types/form";
+import { Field, FormProps } from "../../types/form";
 
 interface FormContainerProps<T extends FieldValues>
   extends Omit<FormProps<T>, "onSubmit"> {
@@ -22,9 +22,16 @@ const FormContainer = <T extends FieldValues>({
     <MyStack sx={{ width: "100%" }} gap={gaps?.rowGap || 3}>
       {fieldGroups.map((group, index) => (
         <FormRow gap={gaps?.columnGap} key={index}>
-          {group.fields.map((field) => (
+          {group.fields.map((field: Field) => (
             <FormColumn gap={gaps?.labelGap} key={field.name}>
-              <InputLabel htmlFor="my-input">{field.label}</InputLabel>
+              <InputLabel htmlFor="my-input">
+                {!!field.rules?.required && (
+                  <Typography component="span" color="error" mr="0.25rem">
+                    *
+                  </Typography>
+                )}
+                {field.label}
+              </InputLabel>
               <FormField control={control} element={field} />
             </FormColumn>
           ))}

@@ -32,14 +32,18 @@ export interface FieldOption {
 export interface Field {
   name: string;
   label: string;
-  type: "text" | "number" | "select" | "email" | "password" | "switch";
+  type: "text" | "number" | "select" | "email" | "password" | "switch" | "date";
   placeholder?: string;
   defaultValue?: string;
-  rules?: any;
+  rules?: Omit<
+    RegisterOptions<TFieldValues, TName>,
+    "valueAsNumber" | "valueAsDate" | "setValueAs" | "disabled"
+  >;
   options?: FieldOption[]; // Only for "select" field type
+  format?: string; // Only for "date" field type
 }
 
-export interface FieldGroup<T> {
+export interface FieldGroup {
   fields: Field[]; // Fields to be rendered in the same row
 }
 
@@ -52,5 +56,7 @@ interface IGaps {
 export interface FormProps<T extends FieldValues> {
   fieldGroups: FieldGroup<T>[]; // Groups of fields for row layout
   onSubmit: SubmitHandler<T>;
+  actionField?: Field;
   gaps?: IGaps;
+  hasResetButton?: boolean;
 }
