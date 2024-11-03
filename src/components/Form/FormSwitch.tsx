@@ -20,7 +20,7 @@ interface FormSwitchProps<T extends FieldValues> {
 
 const FormSwitch = <T extends FieldValues>({
   error,
-  field: { onChange, value },
+  field: { onChange, value, name },
 }: FormSwitchProps<T>) => {
   return (
     <FormControl component="fieldset" error={!!error}>
@@ -31,6 +31,8 @@ const FormSwitch = <T extends FieldValues>({
               checked={!!value}
               onChange={(e) => onChange(e.target.checked)}
               color={error ? "error" : "primary"}
+              name={name}
+              id={name}
             />
           }
           label="Accept Terms & Conditions"

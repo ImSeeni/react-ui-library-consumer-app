@@ -15,9 +15,9 @@ interface FormInputProps<T extends FieldValues> {
 }
 
 const FormInput = <T extends FieldValues>({
-  element: { type, defaultValue, placeholder },
+  element: { type, placeholder },
   error,
-  field: { onChange, value },
+  field: { onChange, value, name },
 }: FormInputProps<T>) => {
   return (
     <MyTextField
@@ -27,6 +27,8 @@ const FormInput = <T extends FieldValues>({
       onChange={onChange}
       placeholder={placeholder}
       helperText={error ? error.message : ""}
+      name={name}
+      id={name}
       fullWidth
     />
   );
