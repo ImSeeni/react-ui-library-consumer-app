@@ -24,7 +24,7 @@ const FormContainer = <T extends FieldValues>({
         <FormRow gap={gaps?.columnGap} key={index}>
           {group.fields.map((field: Field) => (
             <FormColumn gap={gaps?.labelGap} key={field.name}>
-              <InputLabel htmlFor="my-input">
+              <InputLabel htmlFor={field.name}>
                 {!!field.rules?.required && (
                   <Typography component="span" color="error" mr="0.25rem">
                     *

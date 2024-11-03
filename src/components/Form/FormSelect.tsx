@@ -17,8 +17,10 @@ interface FormSelectProps<T extends FieldValues> {
 const FormSelect = <T extends FieldValues>({
   element: { defaultValue, placeholder, options },
   error,
-  field: { onChange, value },
+  field: { onChange, value, name },
 }: FormSelectProps<T>) => {
+  console.log("Select", error);
+
   return (
     <MyTextField
       select
@@ -28,6 +30,8 @@ const FormSelect = <T extends FieldValues>({
       placeholder={placeholder}
       defaultValue={defaultValue || ""}
       helperText={error ? error.message : ""}
+      name={name}
+      id={name}
       fullWidth
     >
       {options?.map((option) => (

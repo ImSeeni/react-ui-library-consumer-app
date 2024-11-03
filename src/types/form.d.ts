@@ -32,7 +32,15 @@ export interface FieldOption {
 export interface Field {
   name: string;
   label: string;
-  type: "text" | "number" | "select" | "email" | "password" | "switch" | "date";
+  type:
+    | "text"
+    | "number"
+    | "select"
+    | "email"
+    | "password"
+    | "switch"
+    | "date"
+    | "multiple-select";
   placeholder?: string;
   defaultValue?: string;
   rules?: Omit<
@@ -59,4 +67,7 @@ export interface FormProps<T extends FieldValues> {
   actionField?: Field;
   gaps?: IGaps;
   hasResetButton?: boolean;
+  hasCancelButton?: boolean;
+  onCancel?: () => void;
+  submitButtonLabel?: string;
 }
